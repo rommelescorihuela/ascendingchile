@@ -32,12 +32,42 @@ class AdminController extends Controller
         $this->ingles = ['Nulo', 'Bajo', 'Medio', 'Avanzado', 'Nativo'];
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $pros = User::where('tipo', 1)
-            ->paginate(10);
+        $nombre = $request->get('buscarpor');
+        $profesion = $request->get('profesion');
+        $acceso = $request->get('acceso');
+        if($profesion!='' or $acceso!='')
+        {
+            $pros1 = User::from('users as a')
+                ->join('profesionals as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 1)
+                ->where('b.titulo', 'LIKE','%'.$profesion.'%')
+                ->where('a.permiso', 'LIKE','%'.$acceso.'%')
+                ->distinct()
+                ->paginate(10);
+        }
+        else
+        {
+        $pros1 = User::where('tipo', 1)
+                ->paginate(10);  
+        }
+        /*$pros =  DB::table('users')
+            ->select('users.id')
+            ->join('profesionals','users.id', '=', 'profesionals.user_id')
+            //->where('profesionals.nombre', 'patricia')
+            ->where('tipo', 1)
 
-        return view('admin.dashboard')->with('pros', $pros);
+            ->paginate(10);
+            echo '<pre>';
+            var_dump($pros1);
+            echo '</pre>';
+            exit();
+            */
+        return view('admin.dashboard')->with('pros', $pros1);
     }
 
     public function empresas()

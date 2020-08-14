@@ -1,20 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container py-5">
     <div class="row justify-content-center">
     
         <div class="col-md-3">
         @include('admin.menu', ['cual' => 1])
         </div>
-    
+        
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header">Profesionales</div>
             </div>
+          <div class="col-md-12">
+              Buscador
+            <form class="form-inline">
+              <!--<input name="buscarpor" class="form-control" type="search" placeholder="Buscar por nombre" aria-label="Search">-->
+              <select id="profesion" class="form-control" name="profesion">
+                                    <option value="" selected disabled>Seleccione Profesion...</option>
+                                    @php
+                                        $profesiones = DB::table('profesiones')->get()->sortBy('profesiones');
+                                    @endphp
+                                    @foreach($profesiones as $profesion)
+                                        <option value="{{ $profesion->id }}">{{ $profesion->profesion }}</option>
+                                    @endforeach
+                                </select>
+              <select id="acceso" class="form-control" name="acceso">
+                                    <option value="" selected disabled>Seleccione Acceso...</option>
+                                        <option value="0">Suspendido</option>
+                                        <option value="1">permitido</option>
+                                </select>
+              <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </form>
+        </div>
+
 <br>
             @if(count($pros) >= 1)
-            <div class="table-responsive">
+
+            <div class="table-responsive col-md-12">
                 <table class="table table-bordered">
                   <thead>
                     <tr>
