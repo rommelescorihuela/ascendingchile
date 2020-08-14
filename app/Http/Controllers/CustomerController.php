@@ -31,7 +31,7 @@ class CustomerController extends Controller
             ];
 
         $pdf = PDF::loadView('pdf_view', $data);
-        return $pdf->download('reporte.pdf');
+        return $pdf->download('reporte_operativo.pdf');
     }
 
     public function OfertaprintPDF($id)
@@ -48,7 +48,7 @@ class CustomerController extends Controller
             ];
 
         $pdf = PDF::loadView('Ofertapdf_view', $data);
-        return $pdf->download('reporte.pdf');
+        return $pdf->download('reporte_oferta.pdf');
     }
 
     public function ProfesionalprintPDF($id)
@@ -65,6 +65,23 @@ class CustomerController extends Controller
             ];
 
         $pdf = PDF::loadView('Profesionalpdf_view', $data);
-        return $pdf->download('reporte.pdf');
+        return $pdf->download('reporte_profesional.pdf');
+    }
+
+    public function levantamientoprintPDF($id)
+    {
+      //echo 'hola';
+      //exit();
+      $datos= new Levantamiento;
+      $info = $datos->find($id);
+      //var_dump($user->nombre);
+      //var_dump($pro->genero);
+       // This  $data array will be passed to our PDF blade
+        $data = [
+       'content' =>  $info,
+            ];
+
+        $pdf = PDF::loadView('Levantamientopdf_view', $data);
+        return $pdf->download('reporte_levantamiento.pdf');
     }
 }

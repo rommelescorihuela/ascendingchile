@@ -23,6 +23,7 @@
                               <th scope="col">Ubicación en Estructura</th>
                               <th scope="col">Superior</th>
                               <th scope="col">Supervisa</th>
+                              <th scope="col">Mas Info</th>
                               <th scope="col">Acceso</th>
                             </tr>
                           </thead>
@@ -34,6 +35,7 @@
                                 <td>{{ $pro->ubicacion }}</td>
                                 <td>{{ $pro->superior }}</td>
                                 <td>{{ $pro->supervisa }}</td>
+                                <td><a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-levantamiento-{{ $pro->id }}"><i class="fa fa-info" aria-hidden="true"></i></a></td>
                                 <td>
                                   <button onclick="permitir({{ $pro->id }})" class="btn btn-success">Permitir</button>
                                   <button onclick="supender({{ $pro->id }})" style="margin-top: 5px" class="btn btn-default">Supender</button>
@@ -80,6 +82,11 @@ function eliminar(levantamiento){
       });
     }
   })
-}
+},
 </script>
 @endsection
+@if(isset($pros) && count($pros) > 0)
+  @foreach($pros as $prof)
+    @include('admin.modal-levantamiento',['pro' => $prof])
+  @endforeach
+@endif

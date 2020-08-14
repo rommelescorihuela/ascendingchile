@@ -21,6 +21,7 @@
                               <th scope="col">Ubicación en Estructura</th>
                               <th scope="col">Superior</th>
                               <th scope="col">Supervisa</th>
+                              <th scope="col">Mas Info</th>
                               <th scope="col">Acceso</th>
                             </tr>
                           </thead>
@@ -32,6 +33,7 @@
                                 <td><?php echo e($pro->ubicacion); ?></td>
                                 <td><?php echo e($pro->superior); ?></td>
                                 <td><?php echo e($pro->supervisa); ?></td>
+                                <td><a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-levantamiento-<?php echo e($pro->id); ?>"><i class="fa fa-info" aria-hidden="true"></i></a></td>
                                 <td>
                                   <button onclick="permitir(<?php echo e($pro->id); ?>)" class="btn btn-success">Permitir</button>
                                   <button onclick="supender(<?php echo e($pro->id); ?>)" style="margin-top: 5px" class="btn btn-default">Supender</button>
@@ -79,8 +81,12 @@ function eliminar(levantamiento){
       });
     }
   })
-}
+},
 </script>
 <?php $__env->stopSection(); ?>
-
+<?php if(isset($pros) && count($pros) > 0): ?>
+  <?php $__currentLoopData = $pros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prof): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php echo $__env->make('admin.modal-levantamiento',['pro' => $prof], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php endif; ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/test_2_1/resources/views/admin/levantamientos.blade.php ENDPATH**/ ?>
