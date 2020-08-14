@@ -53,21 +53,22 @@ Route::get('/home', function () {
 
 // PROFESIONALES
 
-Route::get('/perfil', 'ProfesionalController@index')->name('perfil')->middleware('tipo:1');
+Route::get('/perfil', 'ProfesionalController@index')->name('perfil');//->middleware('tipo:1');
+Route::get('/perfil1/{id}', 'ProfesionalController@index1');
 Route::post('/perfil', 'ProfesionalController@guardar');
 Route::post('/perfil-edit', 'ProfesionalController@editar');
 Route::post('/foto-edit', 'ProfesionalController@editarFoto');
 
-Route::get('/resumen', 'ProfesionalController@resumen')->name('resumen')->middleware('tipo:1');
+Route::get('/resumen', 'ProfesionalController@resumen')->name('resumen');//->middleware('tipo:1');
 Route::post('/resumen', 'ProfesionalController@resumir');
 Route::post('/resumen-edit', 'ProfesionalController@editarResumen');
 
-Route::get('/experiencia', 'ProfesionalController@experiencia')->name('experiencia')->middleware('tipo:1');
+Route::get('/experiencia', 'ProfesionalController@experiencia')->name('experiencia');//->middleware('tipo:1');
 Route::post('/experiencia', 'ProfesionalController@experienciar');
 Route::post('/edit-exp', 'ProfesionalController@editarExp')->name('edit-exp');
 Route::post('/del-exp', 'ProfesionalController@borrarExp')->name('del-exp');
 
-Route::get('/formacion', 'ProfesionalController@formacion')->name('formacion')->middleware('tipo:1');
+Route::get('/formacion', 'ProfesionalController@formacion')->name('formacion');//->middleware('tipo:1');
 Route::post('/formacion', 'ProfesionalController@formar');
 Route::post('/guarda-acad', 'ProfesionalController@guardaAcad');
 Route::post('/edit-form', 'ProfesionalController@editarForm')->name('edit-form');
@@ -76,10 +77,10 @@ Route::post('/del-form', 'ProfesionalController@borrarForm')->name('del-form');
 Route::get('/cv', 'ProfesionalController@cv')->name('cv')->middleware('tipo:1');
 Route::post('/cv', 'ProfesionalController@cvPost');
 
-Route::get('/ofertas-laborales', 'ProfesionalController@ofertas')->name('ofertas-laborales')->middleware('tipo:1');
+Route::get('/ofertas-laborales', 'ProfesionalController@ofertas')->name('ofertas-laborales');//->middleware('tipo:1');
 Route::post('/postular', 'ProfesionalController@postular')->name('postular');
 
-Route::get('/mis-postulaciones', 'ProfesionalController@postulaciones')->name('mis-postulaciones')->middleware('tipo:1');
+Route::get('/mis-postulaciones', 'ProfesionalController@postulaciones')->name('mis-postulaciones');//->middleware('tipo:1');
 
 // EMPRESAS:
 

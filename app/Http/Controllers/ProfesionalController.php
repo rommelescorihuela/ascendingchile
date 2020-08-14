@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use DB;
+use App\User;
 use App\Profesional;
 use App\Experiencia;
 use App\Formacion;
@@ -39,17 +40,35 @@ class ProfesionalController extends Controller
             return view('pro.home');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if( is_null( Auth::user()->profesional ) )
         {
             return view('pro.perfil');
         }
         else {
+
             $yo = Auth::user()->profesional;
+            //var_dump($yo);
+            //exit();
             return view('pro.perfil')->with('yo', $yo);
             //return redirect()->route('home');
         }
+    }
+
+    public function index1($id)
+    {
+             
+           
+            $user = User::where('id',$id)->get();
+            foreach ($user as $k ) {
+                # code...
+            $yo=$k->profesional;
+            }
+            //exit();
+            return view('pro.perfil')->with('yo', $yo);
+            //return redirect()->route('home');
+        
     }
 
     public function guardar(Request $request)

@@ -34,18 +34,87 @@ class AdminController extends Controller
 
     public function dashboard(Request $request)
     {
-        $nombre = $request->get('buscarpor');
+        $titulo = $request->get('titulo');
         $profesion = $request->get('profesion');
         $acceso = $request->get('acceso');
-        if($profesion!='' or $acceso!='')
+        if($profesion!='')
         {
-            $pros1 = User::from('users as a')
+            if($acceso!='')
+            {
+                $pros1 = User::from('users as a')
                 ->join('profesionals as b', function($join){
                     $join->on('a.id', '=', 'b.user_id');
                 })
                 ->select('a.*')
                 ->where('a.tipo', 1)
-                ->where('b.titulo', 'LIKE','%'.$profesion.'%')
+                ->where('b.titulo',$profesion)
+                ->where('a.permiso', 'LIKE','%'.$acceso.'%')
+                ->distinct()
+                ->paginate(10);
+            }
+            else
+            {
+                $pros1 = User::from('users as a')
+                ->join('profesionals as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 1)
+                ->where('b.titulo',$profesion)
+                ->distinct()
+                ->paginate(10);
+            }
+
+            
+        }
+        elseif($titulo!='')
+        {
+            if($acceso!='')
+            {
+            echo 'hola';
+                $pros1 = User::from('users as a')
+                ->join('profesionals as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->join('profesiones as c', function($join){
+                    $join->on('c.id', '=', 'b.titulo');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 1)
+                ->where('c.profesion', 'LIKE','%'.$titulo.'%')
+                ->where('a.permiso', 'LIKE','%'.$acceso.'%')
+                ->distinct()
+                ->paginate(10);
+            }
+            else
+            {
+                $pros1 = User::from('users as a')
+                ->join('profesionals as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->join('profesiones as c', function($join){
+                    $join->on('c.id', '=', 'b.titulo');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 1)
+                ->where('c.profesion', 'LIKE','%'.$titulo.'%')
+                ->distinct()
+                ->paginate(10);
+            }
+
+            
+        }
+        elseif($acceso!='')
+        {
+            $pros1 = User::from('users as a')
+                ->join('profesionals as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->join('profesiones as c', function($join){
+                    $join->on('c.id', '=', 'b.titulo');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 1)
                 ->where('a.permiso', 'LIKE','%'.$acceso.'%')
                 ->distinct()
                 ->paginate(10);

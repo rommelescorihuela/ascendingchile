@@ -15,8 +15,8 @@
           <div class="col-md-12">
               Buscador
             <form class="form-inline">
-              <!--<input name="buscarpor" class="form-control" type="search" placeholder="Buscar por nombre" aria-label="Search">-->
-              <select id="profesion" class="form-control" name="profesion">
+              <input name="titulo" class="form-control" type="search" placeholder="Titulo" aria-label="Search">
+              <select id="profesion" class="form-control col-md-2" name="profesion">
                                     <option value="" selected disabled>Seleccione Profesion...</option>
                                     <?php
                                         $profesiones = DB::table('profesiones')->get()->sortBy('profesiones');
@@ -34,7 +34,7 @@
           </form>
         </div>
 
-<br>
+        <div class="col-md-12 my-5" style="height: 1%;"></div>
             <?php if(count($pros) >= 1): ?>
 
             <div class="table-responsive col-md-12">
@@ -90,6 +90,7 @@
                           <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar(<?php echo e($pro->id); ?>, 1)">Permitir</button>
                         <?php endif; ?>
                         <p><button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro->id); ?>)">Eliminar</button></p>
+                        <!--<p><a href="perfil1/<?php echo e($pro->id); ?>">editar</a></p>-->
                         </td>
                       </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
