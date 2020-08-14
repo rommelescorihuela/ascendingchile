@@ -15,8 +15,8 @@
           <div class="col-md-12">
               Buscador
             <form class="form-inline">
-              <input name="titulo" class="form-control" type="search" placeholder="Titulo" aria-label="Search">
-              <select id="profesion" class="form-control col-md-2" name="profesion">
+              <div class="col-md-3"><input name="titulo" class="form-control" type="search" placeholder="Titulo" aria-label="Search"></div>
+              <div class="col-md-4"><select id="profesion" class="form-control " style="width: 275px" name="profesion">
                                     <option value="" selected disabled>Seleccione Profesion...</option>
                                     <?php
                                         $profesiones = DB::table('profesiones')->get()->sortBy('profesiones');
@@ -24,13 +24,13 @@
                                     <?php $__currentLoopData = $profesiones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $profesion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($profesion->id); ?>"><?php echo e($profesion->profesion); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-              <select id="acceso" class="form-control" name="acceso">
+                                </select></div>
+              <div class="col-md-3"><select id="acceso" class="form-control" name="acceso">
                                     <option value="" selected disabled>Seleccione Acceso...</option>
                                         <option value="0">Suspendido</option>
                                         <option value="1">permitido</option>
-                                </select>
-              <button class="btn btn-outline-success" type="submit">Buscar</button>
+                                </select></div>
+              <div class="col-md-2"><button class="btn btn-outline-success" type="submit">Buscar</button></div>
           </form>
         </div>
 
