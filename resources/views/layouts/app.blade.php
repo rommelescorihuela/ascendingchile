@@ -230,7 +230,7 @@
           <div class="decoration"><h6>Redes Sociales</h6></div>
           <ul class="menu-link sociales-footer">
             <li>
-              <a href="#" target="_blank">
+              <a href="https://www.facebook.com" target="_blank">
                 <i class="fa fa-facebook" aria-hidden="true"></i></a>
             </li>
             <li>
@@ -238,7 +238,7 @@
                 <i class="fa fa-instagram" aria-hidden="true"></i></a>
             </li>
             <li>
-              <a href="#" target="_blank">
+              <a href="https://www.linkedin.com" target="_blank">
                 <i class="fa fa-linkedin" aria-hidden="true"></i></a>
             </li>
           </ul>
