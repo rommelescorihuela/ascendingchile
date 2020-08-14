@@ -282,6 +282,9 @@ endif; ?>
             </div>
         </div>
     </div>
+    <div class="col-md-12" style="height: 5%"></div>
+    <div class="col-md-4"></div>
+<div class="col-md-4"><a href="<?php echo e(url('customer/Empresaprint-pdf',$yo->id)); ?>" class="btn btn-primary">Print PDF</a></div>
 </div>
 <?php $__env->stopSection(); ?>
 

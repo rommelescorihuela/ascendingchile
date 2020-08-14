@@ -177,3 +177,4 @@ Route::get('/customer/print-pdf/{id}', 'CustomerController@printPDF');
 Route::get('/customer/Ofertaprint-pdf/{id}', 'CustomerController@OfertaprintPDF');
 Route::get('/customer/Profesionalprint-pdf/{id}', 'CustomerController@ProfesionalprintPDF');
 Route::get('/customer/Levantamientoprint-pdf/{id}', 'CustomerController@LevantamientoprintPDF');
+Route::get('/customer/Empresaprint-pdf/{id}', 'CustomerController@EmpresaprintPDF');

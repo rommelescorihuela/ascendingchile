@@ -84,4 +84,21 @@ class CustomerController extends Controller
         $pdf = PDF::loadView('Levantamientopdf_view', $data);
         return $pdf->download('reporte_levantamiento'.$id.'.pdf');
     }
+
+    public function empresaprintPDF($id)
+    {
+      //echo 'hola';
+      //exit();
+      $datos= new Empresa;
+      $info = $datos->find($id);
+      //var_dump($user->nombre);
+      //var_dump($pro->genero);
+       // This  $data array will be passed to our PDF blade
+        $data = [
+       'content' =>  $info,
+            ];
+
+        $pdf = PDF::loadView('Empresapdf_view', $data);
+        return $pdf->download('reporte_empresa'.$id.'.pdf');
+    }
 }
