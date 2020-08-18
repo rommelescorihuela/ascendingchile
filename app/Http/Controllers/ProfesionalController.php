@@ -66,7 +66,7 @@ class ProfesionalController extends Controller
             $yo=$k->profesional;
             }
             //exit();
-            return view('pro.perfil')->with('yo', $yo);
+            return view('pro.perfil_admin')->with('yo', $yo);
             //return redirect()->route('home');
         
     }
@@ -132,6 +132,20 @@ class ProfesionalController extends Controller
         }
     }
 
+
+    public function editar1(Request $request)
+    {
+
+        $pro = Profesional::find($request->id);
+        $pro->fill($request->toArray());
+        if($pro->save())
+        {
+            return redirect()->route('dashboard');
+        }
+        
+
+    }
+
     public function editarFoto(Request $request)
     {
         $pro = Auth::user()->profesional;
@@ -177,6 +191,26 @@ class ProfesionalController extends Controller
         }
     }
 
+    public function resumen1($id)
+    {
+        $user = User::where('id',$id)->get();
+            foreach ($user as $k ) {
+                # code...
+            $yo=$k->profesional;
+            }
+        if( is_null( $yo ) )
+        {
+            return view('pro.resumen_admin');
+        }
+        else {
+            //$yo = Auth::user()->profesional;
+            if(is_null($yo->resumen))
+                return view('pro.resumen_admin');
+            else
+                return view('pro.resumen_admin')->with('yo', $yo);
+        }
+    }
+
     public function resumir(Request $request)
     {
     	$pro = Auth::user()->profesional;
@@ -204,6 +238,19 @@ class ProfesionalController extends Controller
         }
     }
 
+    public function editarResumen1(Request $request)
+    {
+        
+        $pro = Profesional::find($request->id);
+        $pro->fill($request->toArray());
+
+        if($pro->save())
+        {
+            return redirect()->route('dashboard');
+        }
+        
+    }
+
     public function experiencia()
     {
         $exp = Auth::user()->experiencias->sortByDesc('periodo_desde');
@@ -215,6 +262,26 @@ class ProfesionalController extends Controller
         else {
             $yo = Auth::user()->profesional;
             return view('pro.experiencia')->with('exp', $exp)->with('yo', $yo);
+        }
+    }
+
+    public function experiencia1($id)
+    {
+        $user = User::where('id',$id)->get();
+            foreach ($user as $k ) {
+                # code...
+            $yo=$k->profesional;
+            $exp1=$k->experiencias;
+            }
+        $exp = $exp1->sortByDesc('periodo_desde');
+
+        if( is_null( $yo ) )
+        {
+            return view('pro.experiencia_admin')->with('exp', $exp);
+        }
+        else {
+            //$yo = Auth::user()->profesional;
+            return view('pro.experiencia_admin')->with('exp', $exp)->with('yo', $yo);
         }
     }
 
@@ -285,6 +352,33 @@ class ProfesionalController extends Controller
         //}
     }
 
+    public function formacion1($id)
+    {
+        $user = User::where('id',$id)->get();
+            foreach ($user as $k ) {
+                # code...
+            $yo=$k->profesional;
+            $form=$k->formacion;
+            }
+        $pro = $yo;
+        $exp = $form->sortByDesc('periodo_desde');
+
+        /*if( is_null( $pro->situacion_acad ) )
+        {
+            return view('pro.formacion')
+                ->with('exp', $exp)
+                ->with('sit', $pro->situacion_acad)
+                ->with('ing', $pro->ingles);
+        }
+        else {*/
+            return view('pro.formacion_admin')
+                ->with('exp', $exp)
+                ->with('sit', $pro->situacion_acad)
+                ->with('ing', $pro->ingles)
+                ->with('yo', $pro);
+        //}
+    }
+
     public function formar(Request $request)
     {
         $exp = new Formacion();
@@ -298,6 +392,25 @@ class ProfesionalController extends Controller
         if($exp->save())
         {
             return redirect()->route('formacion');
+        }
+    }
+
+    public function formar1(Request $request)
+    {
+
+        //echo $request->id;
+        //exit();
+        $exp = new Formacion();
+
+        $exp->fill($request->toArray());
+        $exp->user_id = $request->id;
+
+        $exp->periodo_desde = \Carbon\Carbon::parse($request->periodo_desde)->format('Y-m-d');
+        $exp->periodo_hasta = \Carbon\Carbon::parse($request->periodo_hasta)->format('Y-m-d');
+
+        if($exp->save())
+        {
+            return redirect()->back();
         }
     }
 
@@ -326,6 +439,14 @@ class ProfesionalController extends Controller
         return redirect()->route('formacion');
     }
 
+    public function borrarForm1(Request $request)
+    {
+        $exp = Formacion::find($request->idform);
+            $exp->delete();
+
+        return redirect()->back();
+    }
+
     public function guardaAcad(Request $request)
     {
         $pro = Auth::user()->profesional;
@@ -341,15 +462,94 @@ class ProfesionalController extends Controller
         }
     }
 
+    public function guardaAcad1(Request $request)
+    {
+        $pro = Profesional::find($request->id);
+        $pro->fill($request->toArray());
+
+        if($pro->save())
+        {
+            if(isset($request->primeravez))
+                return redirect()->route('cv');
+            else
+                return redirect()->route('dashboard');
+        }
+    }
+
     public function cv()
     {
         $yo = Auth::user()->profesional;
         return view('pro.cv')->with('yo', $yo);
     }
 
+    public function cv1($id)
+    {
+        //$yo = Auth::user()->profesional;
+        $user = User::where('id',$id)->get();
+            foreach ($user as $k ) {
+                # code...
+            $yo=$k->profesional;
+            }
+        return view('pro.cv_admin')->with('yo', $yo);
+    }
+
     public function cvPost(Request $request)
     {
         $yo = Auth::user()->profesional;
+
+        $primeravez = true;
+        if($yo->cv) $primeravez = false;
+
+        if(!empty($request->file('cv')))
+        {
+            $validator = Validator::make($request->all(), [
+                'cv' => 'required|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            ], [
+                'cv.mimetypes' => 'El formato del archivo no está permitido.'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('cv')
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+
+            if( Storage::disk('cvs')->exists($yo->cv) )
+            {
+                Storage::disk('cvs')->delete($yo->cv);
+            }
+            $file = $request->file('cv');
+            $file_tmp = Storage::disk('cvs')->put('/', $file);
+            $cv = basename($file_tmp);
+
+            $yo->cv = $cv;
+            session()->flash('mensaje', 'Currículum actualizado con éxito.');
+        }
+
+        if($yo->save())
+        {
+            if($primeravez)
+            {
+                session()->flash('exito', true);
+                return redirect()->route('perfil');
+            } else {
+                return redirect()->route('cv');
+            }
+        }
+    }
+
+        public function cvPost1(Request $request,$id)
+    {
+
+        //echo $id;
+        //exit();
+        //$yo = Auth::user()->profesional;
+
+        $user = User::where('id',$id)->get();
+            foreach ($user as $k ) {
+                # code...
+            $yo=$k->profesional;
+            }
 
         $primeravez = true;
         if($yo->cv) $primeravez = false;

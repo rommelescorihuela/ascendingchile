@@ -51,10 +51,24 @@ Route::get('/home', function () {
    return redirect()->route('index');
 })->name('home');
 
+//ADMIN PROFESIONAL
+
+Route::get('/perfil1/{id}', 'ProfesionalController@index1');
+Route::post('/perfil-edit1', 'ProfesionalController@editar1');
+Route::get('/resumen1/{id}', 'ProfesionalController@resumen1');
+Route::post('/resumen-edit1', 'ProfesionalController@editarResumen1');
+Route::get('/experiencia1/{id}', 'ProfesionalController@experiencia1');
+Route::post('/edit-exp1', 'ProfesionalController@editarExp1');
+Route::get('/formacion1/{id}', 'ProfesionalController@formacion1');
+Route::post('/guarda-acad1', 'ProfesionalController@guardaAcad1');
+Route::post('/formacion1/{id}', 'ProfesionalController@formar1');
+Route::post('/del-form1', 'ProfesionalController@borrarForm1');
+Route::get('/cv1/{id}', 'ProfesionalController@cv1');
+Route::post('/cv1/{id}', 'ProfesionalController@cvPost1');
+
 // PROFESIONALES
 
-Route::get('/perfil', 'ProfesionalController@index')->name('perfil');//->middleware('tipo:1');
-Route::get('/perfil1/{id}', 'ProfesionalController@index1');
+Route::get('/perfil', 'ProfesionalController@index')->name('perfil')->middleware('tipo:1');
 Route::post('/perfil', 'ProfesionalController@guardar');
 Route::post('/perfil-edit', 'ProfesionalController@editar');
 Route::post('/foto-edit', 'ProfesionalController@editarFoto');
@@ -74,7 +88,7 @@ Route::post('/guarda-acad', 'ProfesionalController@guardaAcad');
 Route::post('/edit-form', 'ProfesionalController@editarForm')->name('edit-form');
 Route::post('/del-form', 'ProfesionalController@borrarForm')->name('del-form');
 
-Route::get('/cv', 'ProfesionalController@cv')->name('cv')->middleware('tipo:1');
+Route::get('/cv', 'ProfesionalController@cv')->name('cv');//->middleware('tipo:1');
 Route::post('/cv', 'ProfesionalController@cvPost');
 
 Route::get('/ofertas-laborales', 'ProfesionalController@ofertas')->name('ofertas-laborales');//->middleware('tipo:1');
