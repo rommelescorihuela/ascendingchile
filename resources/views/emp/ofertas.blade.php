@@ -83,6 +83,7 @@
                             <td><b>¿Por qué deberías postular a esta vacante?</b></td>
                             <td>{{ $xp->porque }}</td>
                         </tr>
+                        <tr><td><a href="editar-oferta/{{$xp->id}}" class="btn btn-primary">editar</td><td></td></tr>
                     </table>
                     </div>
                   </div>

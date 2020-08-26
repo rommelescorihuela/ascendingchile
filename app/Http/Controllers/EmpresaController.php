@@ -326,12 +326,80 @@ class EmpresaController extends Controller
             ->with('ofertas', $ofertas)
             ->with('yo', $yo);
     }
+    public function editarofertas($id)
+    {
+        
+        $yo = Auth::user()->empresa;
+        $oferta = Auth::user()->ofertas()->where('id',$id)->get();
+        foreach ($oferta as $k) {
+            $ofertas = $k;
+        }
+
+        return view('emp.editar-oferta')
+            ->with('ofertas', $ofertas)
+            ->with('exito', false)
+            ->with('yo', $yo);
+    }
+    public function updateofertas(Request $request,$id)
+    {
+
+        $yo = Auth::user()->empresa;
+        $oferta = Oferta::find($id);
+        $oferta->fill($request->toArray());
+        $oferta->id=$id;
+        $oferta->user_id=$yo->user_id;
+        $oferta->update();
+       
+        $oferta = Auth::user()->ofertas()->where('id',$id)->get();
+        foreach ($oferta as $k) {
+            $ofertas = $k;
+        }
+
+        return view('emp.editar-oferta')
+            ->with('ofertas', $ofertas)
+            ->with('exito', true)
+            ->with('yo', $yo);
+    }
     public function ofertasOp(){
         $yo = Auth::user()->empresa;
         $ofertasOp = Auth::user()->ofertasOp()->orderBy('created_at', 'DESC')->paginate(10);
 
         return view('emp.ofertas-op')
             ->with('ofertas', $ofertasOp)
+            ->with('yo', $yo);
+    }
+    public function editarofertasop($id)
+    {
+        
+        $yo = Auth::user()->empresa;
+        $oferta = Auth::user()->ofertasOp()->where('id',$id)->get();
+        foreach ($oferta as $k) {
+            $ofertas = $k;
+        }
+        
+        return view('emp.editar-oferta-op')
+            ->with('ofertas', $ofertas)
+            ->with('exito', false)
+            ->with('yo', $yo);
+    }
+    public function updateofertasop(Request $request,$id)
+    {
+
+        $yo = Auth::user()->empresa;
+        $oferta = OfertaOp::find($id);
+        $oferta->fill($request->toArray());
+        $oferta->id=$id;
+        $oferta->user_id=$yo->user_id;
+        $oferta->update();
+       
+        $oferta = Auth::user()->ofertasOp()->where('id',$id)->get();
+        foreach ($oferta as $k) {
+            $ofertas = $k;
+        }
+
+        return view('emp.editar-oferta-op')
+            ->with('ofertas', $ofertas)
+            ->with('exito', true)
             ->with('yo', $yo);
     }
 

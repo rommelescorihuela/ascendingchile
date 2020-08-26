@@ -122,6 +122,12 @@ Route::get('/mis-ofertas', 'EmpresaController@ofertas')->name('mis-ofertas')->mi
 Route::get('/mis-ofertas-op', 'EmpresaController@ofertasOp')->name('mis-ofertas-op')->middleware('auth')->middleware('tipo:2');
 Route::post('/estado-oferta', 'EmpresaController@estadoOferta')->name('estado-oferta');
 
+Route::get('/editar-oferta/{id}', 'EmpresaController@editarofertas')->middleware('auth')->middleware('tipo:2');
+Route::post('/editar-oferta/{id}', 'EmpresaController@updateofertas')->middleware('auth')->middleware('tipo:2');
+
+Route::get('/editar-oferta-op/{id}', 'EmpresaController@editarofertasop')->middleware('auth')->middleware('tipo:2');
+Route::post('/editar-oferta-op/{id}', 'EmpresaController@updateofertasop')->middleware('auth')->middleware('tipo:2');
+
 Route::get('/postulaciones/{id}', 'EmpresaController@postulaciones')->name('postulaciones')->middleware('auth')->middleware('tipo:2');
 Route::post('/estado-postulacion', 'EmpresaController@estadoPostulacion')->name('estado-postulacion');
 
