@@ -251,6 +251,22 @@ class AdminController extends Controller
         }
     }
 
+    public function estadoLev(Request $request)
+    {
+        if(Auth::user()->tipo == 0)
+        {
+            $user = User::find($request->idEmp);
+            $user->permiso = $request->estado;
+            $user->save();
+            if($user->permiso == $request->estado)
+                return $user->permiso;
+            else
+                return 66;
+        } else {
+            return 66;
+        }
+    }
+
     public function eliminarPros(Request $request)
     {
         $user = User::find($request->idEmp);

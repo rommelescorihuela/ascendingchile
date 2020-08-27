@@ -148,6 +148,7 @@ Route::get('/admin-area/info-pro/{id}', 'AdminController@infoPro')->name('info-p
 
 Route::post('/info-pros', 'AdminController@infoPros');
 Route::post('/estado-pros', 'AdminController@estadoPros');
+Route::post('/estado-lev', 'AdminController@estadoLev');
 Route::post('/eliminar-pros', 'AdminController@eliminarPros');
 Route::post('/eliminar-winwin', 'AdminController@eliminarWinwin');
 Route::post('/estado-winwin', 'AdminController@estadoWinwin');

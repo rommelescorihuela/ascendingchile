@@ -34,9 +34,13 @@
                                 <td><?php echo e($pro->superior); ?></td>
                                 <td><?php echo e($pro->supervisa); ?></td>
                                 <td><a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-levantamiento-<?php echo e($pro->id); ?>"><i class="fa fa-info" aria-hidden="true"></i></a></td>
-                                <td>
-                                  <button onclick="permitir(<?php echo e($pro->id); ?>)" class="btn btn-success">Permitir</button>
-                                  <button onclick="supender(<?php echo e($pro->id); ?>)" style="margin-top: 5px" class="btn btn-default">Supender</button>
+                                <?php $permiso = DB::table('users')->find($pro->user_id); ?>
+                                <td id="controles-<?php echo e($pro->user_id); ?>">
+                                   <?php if($permiso->permiso == 1): ?>
+                                  <p><span class="label label-success">Permitido</span></p><button onclick="aprobar(<?php echo e($pro->user_id); ?>,1)" class="btn btn-success">Permitir</button>
+                                  <?php else: ?>
+                                  <p><span class="label label-danger">Suspendido</span></p><button onclick="aprobar(<?php echo e($pro->user_id); ?>,0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
+                                  <?php endif; ?>
                                   <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro); ?>)">Eliminar</button>
                                 </td>
                               </tr>
@@ -54,9 +58,36 @@
 
 <script>
     
-function eliminar(levantamiento){
+function aprobar(id, eo){
+  $.ajax({
+    url: "<?php echo e(url('/estado-lev')); ?>",
+    method: "POST",
+    headers: {
+        'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>',
+    },
+    data: {
+        idEmp: id,
+        estado: eo,
+    },
+    success: function (response) {
+        if(response == 1)
+        {
+            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button><br><a href="perfil1/<?php echo e($pro->id); ?>">editar</a></p>');
+        }
+        else if(response == 0)
+        {
+            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button><br><a href="perfil1/<?php echo e($pro->id); ?>">editar</a></p>');
+        }
+        else {
+            alert('No se pudo cambiar el estado de la empresa. Int閚talo m醩 tarde.');
+        }
+    }
+  });
+}
+
+function eliminar(id){
   Swal.fire({
-    title: '¿Estás seguro?',
+    title: '縀stas seguro?',
     text: "",
     icon: 'warning',
     showCancelButton: true,
@@ -67,21 +98,22 @@ function eliminar(levantamiento){
   }).then((result) => {
     if (result.value) {
       $.ajax({
-        url: "<?php echo e(url('/eliminar-levantamiento')); ?>",
+        url: "<?php echo e(url('/eliminar-pros')); ?>",
         method: "POST",
         headers: {
             'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>',
         },
         data: {
-            id: levantamiento.id,
+            idEmp: id,
         },
         success: function (response) {
-            $('[data-id=' + levantamiento.id + ']').remove();
+            $('[data-id=' + id + ']').remove();
         }
       });
     }
   })
-},
+}
+</script>
 </script>
 <?php $__env->stopSection(); ?>
 <?php if(isset($pros) && count($pros) > 0): ?>
