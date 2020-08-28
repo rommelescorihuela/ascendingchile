@@ -38,7 +38,7 @@
                                 </td>
                                 <td id="controles-{{ $pro->id }}">
                                   @if($pro->estado == 0)
-                                  <p><span class="label label-danger">Suspendido</span></p>
+                                  <p><span class="label label-danger">Suspendido</span></p> 
                                   <button onclick="aprobar({{ $pro->id }},1)" class="btn btn-success">Permitir</button>
                                   @else
                                   <p><span class="label label-success">Permitido</span></p>
