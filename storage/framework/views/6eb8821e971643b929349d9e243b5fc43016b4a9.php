@@ -89,7 +89,7 @@
                         <?php else: ?>
                           <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar(<?php echo e($pro->id); ?>, 1)">Permitir</button>
                         <?php endif; ?>
-                        <p><button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro->id); ?>)">Eliminar</button></p>
+                        <!--<p><button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro->id); ?>)">Eliminar</button></p>-->
                         <p><a href="perfil1/<?php echo e($pro->id); ?>">editar</a></p>
                         </td>
                       </tr>

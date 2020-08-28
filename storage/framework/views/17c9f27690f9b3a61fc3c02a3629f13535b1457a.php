@@ -41,7 +41,8 @@
                                   <?php else: ?>
                                   <p><span class="label label-danger">Suspendido</span></p><button onclick="aprobar(<?php echo e($pro->user_id); ?>,0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
                                   <?php endif; ?>
-                                  <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro); ?>)">Eliminar</button>
+                                  <!--<button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro); ?>)">Eliminar</button>-->
+                                  <p><a href="levantamiento-perfil/<?php echo e($pro->id); ?>">editar</a></p>
                                 </td>
                               </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

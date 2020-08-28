@@ -36,10 +36,16 @@
                                 <td>
                                   <a class="btn btn-info" data-toggle="modal" data-target="#perfil-oferta-{{ $pro->id }}"><i class="fa fa-info" aria-hidden="true"></i></a>
                                 </td>
-                                <td>
-                                  <button onclick="permitir({{ $pro->id }})" class="btn btn-success">Permitir</button>
-                                  <button onclick="supender({{ $pro->id }})" style="margin-top: 5px" class="btn btn-default">Supender</button>
+                                <td id="controles-{{ $pro->id }}">
+                                  @if($pro->estado == 0)
+                                  <p><span class="label label-danger">Suspendido</span></p>
+                                  <button onclick="aprobar({{ $pro->id }},1)" class="btn btn-success">Permitir</button>
+                                  @else
+                                  <p><span class="label label-success">Permitido</span></p>
+                                  <button onclick="aprobar({{ $pro->id }},0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
+                                  @endif
                                   <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro }})">Eliminar</button>
+                                  <br><p><a href="editar-oferta/{{ $pro->id }}" class="btn btn-info">editar</a></p>
                                 </td>
                               </tr>
                             @endforeach
@@ -89,5 +95,33 @@ function eliminar(oferta){
   })
 }
 </script>
+<script>
+  function aprobar(id, eo){
+  $.ajax({
+    url: "{{ url('/estado-ofer') }}",
+    method: "POST",
+    headers: {
+        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    },
+    data: {
+        idEmp: id,
+        estado: eo,
+    },
+    success: function (response) {
+        if(response == 1)
+        {
+            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button><br><a href="editar-oferta/{{ $pro->id }}">editar</a></p>');
+        }
+        else if(response == 0)
+        {
+            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button><br><a href="editar-oferta/{{ $pro->id }}">editar</a></p>');
+        }
+        else {
+            alert('No se pudo cambiar el estado de la empresa. Inténtalo más tarde.');
+        }
+    }
+  });
+}
 
+</script>
 @endsection

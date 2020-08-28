@@ -152,6 +152,27 @@ class AdminController extends Controller
 
         return view('admin.ofertas')->with('pros', $pros);
     }
+
+    public function editaroferta($id)
+    {
+        $oferta = Oferta::find($id);
+        return view('admin.editar-oferta')
+        ->with('ofertas', $oferta)
+        ->with('exito',false);
+
+    }
+
+    public function updateoferta(Request $request,$id)
+    {
+        $oferta = Oferta::find($id);
+        $oferta->fill($request->toArray());
+        $oferta->id=$id;
+        $oferta->save();
+
+        return view('admin.editar-oferta')
+        ->with('ofertas', $oferta)
+        ->with('exito',true);
+    }
     
     public function eliminarOferta(Request $request)
     {
@@ -159,10 +180,50 @@ class AdminController extends Controller
         $oferta->delete();
     }
     
+    public function estadoOfer(Request $request)
+    {
+        if(Auth::user()->tipo == 0)
+        {
+            $oferta = Oferta::find($request->idEmp);
+            $oferta->estado = $request->estado;
+            $oferta->save();
+            if($oferta->estado == $request->estado)
+                return $oferta->estado;
+            else
+                return 66;
+        } else {
+            return 66;
+        }
+    }
+
     public function eliminarLevantamiento(Request $request)
     {
         $levantamiento = Levantamiento::find($request->id);
         $levantamiento->delete();
+    }
+
+    public function editarLevantamiento($id)
+    {
+        $levantamiento = Levantamiento::find($id);
+
+        return view('admin.editarlevantamiento')
+        ->with('pros', $levantamiento)
+        ->with('exito',false);
+        //var_dump($levantamiento->ubicacion);
+
+    }
+
+    public function updateLevantamiento(Request $request,$id)
+    {
+        $levantamiento = Levantamiento::find($id);
+
+        $levantamiento->fill($request->toArray());
+        $levantamiento->id=$id;
+        $levantamiento->save();
+        return view('admin.editarlevantamiento')
+        ->with('pros', $levantamiento)
+        ->with('exito',true);
+        //$levantamiento->delete();
     }
     
     public function eliminarOperativo(Request $request)

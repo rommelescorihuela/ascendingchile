@@ -89,7 +89,7 @@
                         @else
                           <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar({{ $pro->id }}, 1)">Permitir</button>
                         @endif
-                        <p><button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro->id }})">Eliminar</button></p>
+                        <!--<p><button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro->id }})">Eliminar</button></p>-->
                         <p><a href="perfil1/{{ $pro->id }}">editar</a></p>
                         </td>
                       </tr>

@@ -159,6 +159,12 @@ Route::post('/eliminar-oferta', 'AdminController@eliminarOferta');
 Route::post('/eliminar-levantamiento', 'AdminController@eliminarLevantamiento');
 Route::post('/eliminar-operativo', 'AdminController@eliminarOperativo');
 
+Route::get('admin-area/levantamiento-perfil/{id}','AdminController@editarlevantamiento');
+Route::post('admin-area/levantamiento-perfil/{id}','AdminController@updatelevantamiento');
+Route::get('admin-area/editar-oferta/{id}','AdminController@editaroferta');
+Route::post('admin-area/editar-oferta/{id}','AdminController@updateoferta');
+Route::post('/estado-ofer','AdminController@estadoOfer');
+
 
 //
 

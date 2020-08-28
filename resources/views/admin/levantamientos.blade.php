@@ -43,7 +43,8 @@
                                   @else
                                   <p><span class="label label-danger">Suspendido</span></p><button onclick="aprobar({{ $pro->user_id }},0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
                                   @endif
-                                  <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro }})">Eliminar</button>
+                                  <!--<button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro }})">Eliminar</button>-->
+                                  <p><a href="levantamiento-perfil/{{ $pro->id }}">editar</a></p>
                                 </td>
                               </tr>
                             @endforeach
