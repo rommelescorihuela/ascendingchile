@@ -17,7 +17,7 @@
             @if(count($ofertas) >= 1)
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
             @foreach($ofertas as $xp)
-            <div class="panel panel-default">
+            <div class="panel panel-default" data-id="{{ $xp->id }}">
                 <div class="panel-heading" role="tab" id="heading{{ $xp->id }}">
                     <a class="btn btn-info pull-right" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $xp->id }}" aria-expanded="false" aria-controls="collapse{{ $xp->id }}">+ Info</a>
                     @if($xp->estado == 1)
@@ -49,7 +49,7 @@
                     </div>
                     <div class="table-responsive">
                     <table class="table table-condensed table-hover" style="margin-bottom: 0px;">
-                        <tr>
+                        <tr data-id="{{ $xp->id }}">
                             <td width="30%"><b>Industria:</b></td>
                             <td>{{ DB::table('industria')->where('id', $xp->industria)->first()->industria }}</td>
                         </tr><tr>
@@ -83,7 +83,10 @@
                             <td><b>¿Por qué deberías postular a esta vacante?</b></td>
                             <td>{{ $xp->porque }}</td>
                         </tr>
-                        <tr><td><a href="editar-oferta-op/{{$xp->id}}" class="btn btn-primary">Editar</a></td><td></td></tr>
+                        <tr><td><a href="editar-oferta-op/{{$xp->id}}" class="btn btn-primary">Editar</a>
+                        <a href="customer/Empresaofertaopprint-pdf/{{$xp->id}}" class="btn btn-default">PrintPDF</a>
+                        </td><td><button class="btn btn-danger" style="margin-top: 0px" onclick="eliminar({{ $xp }})">Eliminar</button></td>
+                        </tr>
                     </table>
                     </div>
                   </div>
@@ -136,6 +139,37 @@ function activar(id, eo){
             }
           });
     }
+}
+</script>
+<script>
+    
+function eliminar(oferta){
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "{{ url('/eliminar-ofertaop') }}",
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        data: {
+            id: oferta.id,
+        },
+        success: function (response) {
+            $('[data-id=' + oferta.id + ']').remove();
+        }
+      });
+    }
+  })
 }
 </script>
 @endsection

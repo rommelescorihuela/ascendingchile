@@ -133,6 +133,7 @@ Route::post('/estado-postulacion', 'EmpresaController@estadoPostulacion')->name(
 
 Route::get('/perfiles-interes', 'EmpresaController@interes')->name('perfiles-interes')->middleware('auth')->middleware('tipo:2');
 Route::post('/me-interesa', 'EmpresaController@meInteresa')->name('me-interesa');
+Route::post('eliminar-oferta','EmpresaController@eliminaoferta');
 
 // ADMIN
 
@@ -156,6 +157,7 @@ Route::post('/estado-winwin', 'AdminController@estadoWinwin');
 //agregados JP
 Route::post('/eliminar-empresa', 'AdminController@eliminarEmpresa');
 Route::post('/eliminar-oferta', 'AdminController@eliminarOferta');
+Route::post('/eliminar-ofertaop', 'AdminController@eliminarOfertaop');
 Route::post('/eliminar-levantamiento', 'AdminController@eliminarLevantamiento');
 Route::post('/eliminar-operativo', 'AdminController@eliminarOperativo');
 
@@ -226,3 +228,5 @@ Route::get('/customer/Ofertaprint-pdf/{id}', 'CustomerController@OfertaprintPDF'
 Route::get('/customer/Profesionalprint-pdf/{id}', 'CustomerController@ProfesionalprintPDF');
 Route::get('/customer/Levantamientoprint-pdf/{id}', 'CustomerController@LevantamientoprintPDF');
 Route::get('/customer/Empresaprint-pdf/{id}', 'CustomerController@EmpresaprintPDF');
+Route::get('/customer/Empresaofertaprint-pdf/{id}', 'CustomerController@EmpresaofertaprintPDF');
+Route::get('/customer/Empresaofertaopprint-pdf/{id}', 'CustomerController@EmpresaofertaopprintPDF');

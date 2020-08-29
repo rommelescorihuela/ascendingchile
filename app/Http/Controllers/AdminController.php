@@ -9,6 +9,7 @@ use App\User;
 use App\Profesional;
 use App\Empresa;
 use App\Oferta;
+use App\OfertaOp;
 use App\Levantamiento;
 use App\winwin;
 use App\contacto;
@@ -166,6 +167,12 @@ class AdminController extends Controller
     public function eliminarOferta(Request $request)
     {
         $oferta = Oferta::find($request->id);
+        $oferta->delete();
+    }
+
+    public function eliminarOfertaop(Request $request)
+    {
+        $oferta = OfertaOp::find($request->id);
         $oferta->delete();
     }
     

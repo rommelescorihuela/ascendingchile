@@ -9,6 +9,7 @@ use App\User;
 use App\Profesional;
 use App\Empresa;
 use App\Oferta;
+use App\OfertaOp;
 use App\Levantamiento;
 use App\winwin;
 use App\contacto;
@@ -100,5 +101,39 @@ class CustomerController extends Controller
 
         $pdf = PDF::loadView('Empresapdf_view', $data);
         return $pdf->download('reporte_empresa'.$id.'.pdf');
+    }
+
+    public function EmpresaofertaprintPDF($id)
+    {
+      //echo 'hola';
+      //exit();
+      $datos= new Oferta;
+      $info = $datos->find($id);
+      //var_dump($user->nombre);
+      //var_dump($pro->genero);
+       // This  $data array will be passed to our PDF blade
+        $data = [
+       'xp' =>  $info,
+            ];
+
+        $pdf = PDF::loadView('Empresaofertapdf_view', $data);
+        return $pdf->download('reporte_empresa_oferta'.$id.'.pdf');
+    }
+
+    public function EmpresaofertaopprintPDF($id)
+    {
+      //echo 'hola';
+      //exit();
+      $datos= new OfertaOp;
+      $info = $datos->find($id);
+      //var_dump($user->nombre);
+      //var_dump($pro->genero);
+       // This  $data array will be passed to our PDF blade
+        $data = [
+       'xp' =>  $info,
+            ];
+
+        $pdf = PDF::loadView('Empresaofertaoppdf_view', $data);
+        return $pdf->download('reporte_empresa_oferta_op'.$id.'.pdf');
     }
 }
