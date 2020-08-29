@@ -84,7 +84,7 @@
                             <td>{{ $xp->porque }}</td>
                         </tr>
                         <tr>
-                            <td><a href="editar-oferta/{{$xp->id}}" class="btn btn-primary">editar
+                            <td><a href="editar-oferta/{{$xp->id}}" class="btn btn-warning btn-sm">editar
                             <a href="customer/Empresaofertaprint-pdf/{{$xp->id}}" class="btn btn-default" style="margin-left: 10px">Print PDF</td>    
                             <td><button class="btn btn-danger" style="margin-top: 0px" onclick="eliminar({{ $xp }})">Eliminar</button></td>
                             </tr>

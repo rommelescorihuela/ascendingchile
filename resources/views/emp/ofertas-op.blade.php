@@ -83,7 +83,7 @@
                             <td><b>¿Por qué deberías postular a esta vacante?</b></td>
                             <td>{{ $xp->porque }}</td>
                         </tr>
-                        <tr><td><a href="editar-oferta-op/{{$xp->id}}" class="btn btn-primary">Editar</a>
+                        <tr><td><a href="editar-oferta-op/{{$xp->id}}" class="btn btn-warning btn-sm">Editar</a>
                         <a href="customer/Empresaofertaopprint-pdf/{{$xp->id}}" class="btn btn-default">PrintPDF</a>
                         </td><td><button class="btn btn-danger" style="margin-top: 0px" onclick="eliminar({{ $xp }})">Eliminar</button></td>
                         </tr>
