@@ -159,6 +159,9 @@ Route::post('/eliminar-oferta', 'AdminController@eliminarOferta');
 Route::post('/eliminar-levantamiento', 'AdminController@eliminarLevantamiento');
 Route::post('/eliminar-operativo', 'AdminController@eliminarOperativo');
 
+
+//ADMIN LEVANTAMIENTO
+
 Route::get('admin-area/levantamiento-perfil/{id}','AdminController@editarlevantamiento');
 Route::post('admin-area/levantamiento-perfil/{id}','AdminController@updatelevantamiento');
 Route::get('admin-area/editar-oferta/{id}','AdminController@editaroferta');
@@ -166,7 +169,25 @@ Route::post('admin-area/editar-oferta/{id}','AdminController@updateoferta');
 Route::post('/estado-ofer','AdminController@estadoOfer');
 
 
-//
+//ADMIN OPERATIVOS
+
+Route::get('admin-area/perfil-op1/{id}', 'OperativoController@index1')->name('perfil-op1/{id}');
+Route::post('/perfil-op1', 'OperativoController@guardar');
+Route::post('/perfil-op-edit1', 'OperativoController@editar1');
+Route::post('/foto-op-edit1', 'OperativoController@editarFoto');
+
+Route::get('admin-area/situacion-op1/{id}', 'OperativoController@resumen1');
+Route::post('/situacion-op', 'OperativoController@resumir');
+Route::post('admin-area/situacion-op-edit1', 'OperativoController@editarResumen1');
+
+Route::get('admin-area/experiencia-op1/{id}', 'OperativoController@experiencia1')->name('experiencia-op1/{id}');
+Route::post('admin-area/experiencia-op1/{id}', 'OperativoController@experienciar1');
+Route::post('/del-exp-op1', 'OperativoController@borrarExp1')->name('del-exp-op1');
+
+Route::get('admin-area/formacion-op1/{id}', 'OperativoController@formacion1')->name('formacion-op1/{id}');
+Route::post('admin-area/guarda-acad-op1', 'OperativoController@guardaAcad1');
+Route::post('admin-area/formacion-op1/{id}', 'OperativoController@formar1');
+Route::post('/del-form-op1', 'OperativoController@borrarForm1')->name('del-form-op1');
 
 // OPERATIVOS
 

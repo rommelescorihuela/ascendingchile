@@ -71,10 +71,11 @@
                         </td>
                         <td id="controles-{{ $pro->id }}">
                         @if($pro->permiso == 1)
-                          <p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar({{ $pro->id }}, 0)">Suspender</button>
+                          <p><span class="label label-success">Permitido</span></p><button class="btn btn-default btn-sm" onclick="aprobar({{ $pro->id }}, 0)">Suspender</button>
                         @else
-                          <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar({{ $pro->id }}, 1)">Permitir</button>
+                          <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info btn-sm" onclick="aprobar({{ $pro->id }}, 1)">Permitir</button>
                         @endif
+                        <a href="perfil-op1/{{$pro->id}}" class="btn btn-warning btn-sm">Editar</a>
                         </td>
                       </tr>
                     @endforeach

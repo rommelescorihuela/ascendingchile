@@ -37,6 +37,16 @@ class OperativoController extends Controller
         }
     }
 
+    public function index1($id)
+    {
+            $operativo = Operativo::where('user_id',$id)->get();
+            foreach ($operativo as $k) {
+                $yo=$k;
+            }
+            return view('admin.perfil')->with('yo', $yo);
+        
+    }
+
     public function guardar(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -98,6 +108,19 @@ class OperativoController extends Controller
         }
     }
 
+    public function editar1(Request $request)
+    {
+        $operativo = Operativo::find($request->id);  
+
+        $operativo->fill($request->toArray());
+
+        if($operativo->save())
+        {
+            //return redirect()->route('perfil-op1');
+            return redirect('admin-area/perfil-op1/'.$operativo->user_id);
+        }
+    }
+
     public function editarFoto(Request $request)
     {
         $pro = Auth::user()->operativo;
@@ -143,6 +166,15 @@ class OperativoController extends Controller
         }
     }
 
+    public function resumen1($id)
+    {
+        $operativo = Operativo::where('user_id',$id)->get();
+        foreach ($operativo as $k) {
+            $yo=$k;
+            }
+        return view('admin.resumen')->with('yo', $yo);
+        
+    }
     public function resumir(Request $request)
     {
     	$pro = Auth::user()->operativo;
@@ -172,6 +204,20 @@ class OperativoController extends Controller
         }
     }
 
+    public function editarResumen1(Request $request)
+    {
+        $operativo = Operativo::find($request->id); 
+
+        $operativo->fill($request->toArray());
+
+        if($request->situacion == 0) $operativo->actividad = NULL;
+
+        if($operativo->save())
+        {
+            return redirect('admin-area/perfil-op1/'.$operativo->user_id);
+        }
+    }
+
     public function experiencia()
     {
         $exp = Auth::user()->experienciasOp->sortByDesc('periodo_desde');
@@ -184,6 +230,23 @@ class OperativoController extends Controller
             $yo = Auth::user()->operativo;
             return view('ope.experiencia')->with('exp', $exp)->with('yo', $yo);
         }
+    }
+
+    public function experiencia1($id)
+    {
+       $experiencia = ExperienciaOp::where('user_id',$id)->get();
+        foreach ($experiencia as $k) {
+                $exp=$k;
+            }
+       $operativo = Operativo::where('user_id',$id)->get();
+        foreach ($operativo as $k) {
+            $yo=$k;
+            }     
+
+            return view('admin.experiencia')
+            ->with('exp', $experiencia)
+            ->with('yo', $yo);
+        
     }
 
     public function experienciar(Request $request)
@@ -204,6 +267,28 @@ class OperativoController extends Controller
                 return redirect()->route('formacion');
             }*/
             return redirect()->route('experiencia-op');
+        }
+    }
+
+    public function experienciar1(Request $request,$id)
+    {
+        $exp = new ExperienciaOp();
+
+        $exp->fill($request->toArray());
+        $exp->user_id = $id;
+        //exit();
+        $exp->periodo_desde = \Carbon\Carbon::parse($request->periodo_desde)->format('Y-m-d');
+        $exp->periodo_hasta = \Carbon\Carbon::parse($request->periodo_hasta)->format('Y-m-d');
+
+        if($exp->save())
+        {
+            //var_dump($exp->save());
+            /*$exps = Auth::user()->experiencias->count();
+            if($exps == 1)
+            {
+                return redirect()->route('formacion');
+            }*/
+            //return redirect()->route('experiencia-op');
         }
     }
 
@@ -232,12 +317,35 @@ class OperativoController extends Controller
         return redirect()->route('experiencia-op');
     }
 
+    public function borrarExp1(Request $request)
+    {
+        $exp = ExperienciaOp::find($request->idexp);
+        $exp->delete();
+
+         return redirect()->back();
+    }
+
     public function formacion()
     {
         $pro = Auth::user()->operativo;
         $exp = Auth::user()->formacionOp;
 
         return view('ope.formacion')
+            ->with('exp', $exp)
+            ->with('sit', $pro->nivel_educ)
+            ->with('yo', $pro);
+    }
+
+    public function formacion1($id)
+    {
+        $operativo = Operativo::where('user_id',$id)->get();
+            foreach ($operativo as $k) {
+                $pro=$k;
+            }
+        //$pro = Auth::user()->operativo;
+        $exp = FormacionOp::where('user_id',$id)->get();
+
+        return view('admin.formacion')
             ->with('exp', $exp)
             ->with('sit', $pro->nivel_educ)
             ->with('yo', $pro);
@@ -256,6 +364,22 @@ class OperativoController extends Controller
         if($exp->save())
         {
             return redirect()->route('formacion-op');
+        }
+    }
+
+    public function formar1(Request $request,$id)
+    {
+        $exp = new FormacionOp();
+
+        $exp->fill($request->toArray());
+        $exp->user_id = $id;
+/*
+        $exp->periodo_desde = \Carbon\Carbon::parse($request->periodo_desde)->format('Y-m-d');
+        $exp->periodo_hasta = \Carbon\Carbon::parse($request->periodo_hasta)->format('Y-m-d');
+*/
+        if($exp->save())
+        {
+            return redirect('admin-area/formacion-op1/'.$id);
         }
     }
 
@@ -284,6 +408,15 @@ class OperativoController extends Controller
         return redirect()->route('formacion-op');
     }
 
+    public function borrarForm1(Request $request)
+    {
+        echo $request->idform;
+        $exp = FormacionOp::find($request->idform);
+        $exp->delete();
+
+        return redirect('admin-area/formacion-op1/'.$exp->user_id);
+    }
+
     public function guardaAcad(Request $request)
     {
         $pro = Auth::user()->operativo;
@@ -298,7 +431,19 @@ class OperativoController extends Controller
                 return redirect()->route('formacion-op');
         }
     }
-
+    
+    public function guardaAcad1(Request $request)
+    {
+        $operativo = Operativo::find($request->id);
+        $operativo->fill($request->toArray());
+        
+        if($operativo->save())
+        {
+        
+            
+                return redirect('admin-area/formacion-op1/'.$operativo->user_id);
+        }
+    }
     public function cv()
     {
         $yo = Auth::user()->operativo;

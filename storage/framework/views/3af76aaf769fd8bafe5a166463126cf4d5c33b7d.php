@@ -70,10 +70,11 @@
                         </td>
                         <td id="controles-<?php echo e($pro->id); ?>">
                         <?php if($pro->permiso == 1): ?>
-                          <p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar(<?php echo e($pro->id); ?>, 0)">Suspender</button>
+                          <p><span class="label label-success">Permitido</span></p><button class="btn btn-default btn-sm" onclick="aprobar(<?php echo e($pro->id); ?>, 0)">Suspender</button>
                         <?php else: ?>
-                          <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar(<?php echo e($pro->id); ?>, 1)">Permitir</button>
+                          <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info btn-sm" onclick="aprobar(<?php echo e($pro->id); ?>, 1)">Permitir</button>
                         <?php endif; ?>
+                        <a href="perfil-op1/<?php echo e($pro->id); ?>" class="btn btn-warning btn-sm">Editar</a>
                         </td>
                       </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
