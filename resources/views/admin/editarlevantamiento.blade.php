@@ -166,6 +166,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn-style-one btn-iniciar-sesion">Enviar</button>
+                                <a href="../levantamientos" class="btn-style-one btn-iniciar-sesion">Volver</a>
                             </div>
                         </div>
                     </form>
