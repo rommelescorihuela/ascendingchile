@@ -32,7 +32,7 @@ class CustomerController extends Controller
             ];
 
         $pdf = PDF::loadView('pdf_view', $data);
-        return $pdf->download('reporte_operativo'.$id.'.pdf');
+        return $pdf->download('perfil_operativo'.$id.'.pdf');
     }
 
     public function OfertaprintPDF($id)
