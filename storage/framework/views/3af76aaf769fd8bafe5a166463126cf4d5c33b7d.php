@@ -41,7 +41,7 @@
                   </thead>
                   <tbody>
                     <?php $__currentLoopData = $pros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <tr>
+                      <tr data-id="<?php echo e($pro->id); ?>">
                         <td>
                           <b>RUT:</b> <span id="nombre-<?php echo e($pro->id); ?>"><?php echo e($pro->name); ?></span><br>
                           <?php if(!is_null($pro->operativo)): ?>
@@ -90,6 +90,7 @@
                           <p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info btn-sm" onclick="aprobar(<?php echo e($pro->id); ?>, 1)">Permitir</button>
                         <?php endif; ?>
                         <a href="perfil-op1/<?php echo e($pro->id); ?>" class="btn btn-warning btn-sm">Editar</a>
+                        <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro->id); ?>)">Eliminar</button>
                         </td>
                       </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -189,6 +190,35 @@ function aprobar(id, eo){
         }
     }
   });
+}
+
+function eliminar(id){
+  Swal.fire({
+    title: '¿Estas seguro?',
+    text: "",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "<?php echo e(url('/eliminar-ope')); ?>",
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>',
+        },
+        data: {
+            idEmp: id,
+        },
+        success: function (response) {
+            $('[data-id=' + id + ']').remove();
+        }
+      });
+    }
+  })
 }
 </script>
 <?php $__env->stopSection(); ?>

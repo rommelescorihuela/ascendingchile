@@ -47,7 +47,7 @@
                                   <p><span class="label label-success">Permitido</span></p>
                                   <button onclick="aprobar(<?php echo e($pro->id); ?>,0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
                                   <?php endif; ?>
-                                  <!--<button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro); ?>)">Eliminar</button>-->
+                                  <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar(<?php echo e($pro->id); ?>)">Eliminar</button>
                                   <p><a href="levantamiento-perfil/<?php echo e($pro->id); ?>" class="btn btn-warning btn-sm">editar</a></p>
                                 </td>
                               </tr>
@@ -105,7 +105,7 @@ function eliminar(id){
   }).then((result) => {
     if (result.value) {
       $.ajax({
-        url: "<?php echo e(url('/eliminar-pros')); ?>",
+        url: "<?php echo e(url('/eliminar-levantamiento1')); ?>",
         method: "POST",
         headers: {
             'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>',

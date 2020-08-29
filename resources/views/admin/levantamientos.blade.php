@@ -49,7 +49,7 @@
                                   <p><span class="label label-success">Permitido</span></p>
                                   <button onclick="aprobar({{ $pro->id }},0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
                                   @endif
-                                  <!--<button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro }})">Eliminar</button>-->
+                                  <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro->id }})">Eliminar</button>
                                   <p><a href="levantamiento-perfil/{{ $pro->id }}" class="btn btn-warning btn-sm">editar</a></p>
                                 </td>
                               </tr>
@@ -106,7 +106,7 @@ function eliminar(id){
   }).then((result) => {
     if (result.value) {
       $.ajax({
-        url: "{{ url('/eliminar-pros') }}",
+        url: "{{ url('/eliminar-levantamiento1') }}",
         method: "POST",
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}',

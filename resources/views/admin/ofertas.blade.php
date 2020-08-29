@@ -44,7 +44,7 @@
                                   <p><span class="label label-success">Permitido</span></p>
                                   <button onclick="aprobar({{ $pro->id }},0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
                                   @endif
-                                  <!--<button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro }})">Eliminar</button>-->
+                                  <button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro }})">Eliminar</button>
                                   <br><p><a href="editar-oferta/{{ $pro->id }}" class="btn btn-warning btn-sm">editar</a></p>
                                 </td>
                               </tr>

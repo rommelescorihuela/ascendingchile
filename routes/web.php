@@ -161,6 +161,9 @@ Route::post('/eliminar-ofertaop', 'AdminController@eliminarOfertaop');
 Route::post('/eliminar-levantamiento', 'AdminController@eliminarLevantamiento');
 Route::post('/eliminar-operativo', 'AdminController@eliminarOperativo');
 
+Route::post('/eliminar-levantamiento1', 'AdminController@eliminarLev');
+Route::post('/eliminar-ope', 'AdminController@eliminarOpe');
+
 
 //ADMIN LEVANTAMIENTO
 

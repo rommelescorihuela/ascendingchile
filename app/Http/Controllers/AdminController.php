@@ -8,12 +8,14 @@ use DB;
 use App\User;
 use App\Profesional;
 use App\Empresa;
+use App\Interes;
 use App\Oferta;
 use App\OfertaOp;
 use App\Levantamiento;
 use App\winwin;
 use App\contacto;
 use App\Operativo;
+use App\Postulacion;
 
 class AdminController extends Controller
 {
@@ -372,9 +374,33 @@ class AdminController extends Controller
     {
         $user = User::find($request->idEmp);
         $prefesional = $user->profesional();
+        $exp=$user->experiencias();
+        $forma=$user->formacion();
+        $pro=Profesional::where('user_id',$user->id)->get();
+        foreach ($pro as $k) {$prof=$k;}
+        $int=Interes::where('profesional',$prof->id)->delete();
+        $postu=Postulacion::where('profesional',$prof->id)->delete();
+        //exit();
+
         $prefesional->delete();
+        $forma->delete();
+        $exp->delete();
         $user->delete();
 
+    }
+
+    public function eliminarLev(Request $request)
+    {
+        $levantamiento = Levantamiento::find($request->idEmp);
+        $levantamiento->delete();
+        
+
+    }
+
+    public function eliminarOpe(Request $request)
+    {
+        $operativo = Operativo::where('user_id',$request->idEmp);
+        $operativo->delete();
     }
     
     public function eliminarEmpresa(Request $request)
