@@ -138,7 +138,7 @@
                             </div>
                             @if(count($exp) >= 1)
                             <div class="col-md-5 text-right">
-                                <a href="{{ route('formacion-op') }}" class="btn btn-light" style="color:#FFF;">
+                                <a href="../../admin-area/formacion-op1/{{$yo->user_id}}"" class="btn btn-light" style="color:#FFF;">
                                     {{ __('Ir a Información Académica >') }}
                                 </a>
                             </div>

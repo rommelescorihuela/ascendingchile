@@ -282,13 +282,7 @@ class OperativoController extends Controller
 
         if($exp->save())
         {
-            //var_dump($exp->save());
-            /*$exps = Auth::user()->experiencias->count();
-            if($exps == 1)
-            {
-                return redirect()->route('formacion');
-            }*/
-            //return redirect()->route('experiencia-op');
+            return redirect('admin-area/experiencia-op1/'.$id);
         }
     }
 

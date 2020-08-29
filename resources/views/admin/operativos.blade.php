@@ -12,9 +12,24 @@
             <div class="card">
                 <div class="card-header">Operativos</div>
             </div>
-<br>
+
+
+              <div class="col-md-12">
+              <div class="col-md-12">Buscador</div>
+            <form class="form-inline">
+              <div class="col-md-3" style="margin-right: 1%;"><input name="titulo" class="form-control" type="search" placeholder="Ocupacion" aria-label="Search"></div>
+              
+              <div class="col-md-3"><select id="acceso" class="form-control" name="acceso">
+                                    <option value="" selected disabled>Seleccione Acceso...</option>
+                                        <option value="0">Suspendido</option>
+                                        <option value="1">permitido</option>
+                                </select></div>
+              <div class="col-md-1"><button class="btn btn-outline-success" type="submit">Buscar</button></div>
+          </form>
+        </div>
+        <div class="col-md-12 my-5" style="height: 1%;"></div>
             @if(count($pros) >= 1)
-            <div class="table-responsive">
+            <div class="table-responsive col-md-12 ">
                 <table class="table table-bordered">
                   <thead>
                     <tr>

@@ -124,18 +124,7 @@ class AdminController extends Controller
         $pros1 = User::where('tipo', 1)
                 ->paginate(10);  
         }
-        /*$pros =  DB::table('users')
-            ->select('users.id')
-            ->join('profesionals','users.id', '=', 'profesionals.user_id')
-            //->where('profesionals.nombre', 'patricia')
-            ->where('tipo', 1)
 
-            ->paginate(10);
-            echo '<pre>';
-            var_dump($pros1);
-            echo '</pre>';
-            exit();
-            */
         return view('admin.dashboard')->with('pros', $pros1);
     }
 
@@ -253,11 +242,55 @@ class AdminController extends Controller
         return view('admin.contactos')->with('pros', $pros);
     }
 
-    public function operativos()
+    public function operativos(Request $request)
     {
+
+        $titulo = $request->get('titulo');
+        //$profesion = $request->get('profesion');
+        $acceso = $request->get('acceso');
+        if($titulo!='' and $acceso!='')
+        {
+            $pros1 = User::from('users as a')
+                ->join('experiencia_ops as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 3)
+                ->where('b.ocupacion','like','%'.$titulo.'%')
+                ->where('a.permiso', 'LIKE','%'.$acceso.'%')
+                ->distinct()
+                ->paginate(10);
+        }
+        elseif ($titulo!='') 
+        {
+            $pros1 = User::from('users as a')
+                ->join('experiencia_ops as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 3)
+                ->where('b.ocupacion','like','%'.$titulo.'%')
+                //->where('a.permiso', 'LIKE','%'.$acceso.'%')
+                ->distinct()
+                ->paginate(10);
+        }
+        else
+        {
+            $pros1 = User::from('users as a')
+                ->join('operativos as b', function($join){
+                    $join->on('a.id', '=', 'b.user_id');
+                })
+                ->select('a.*')
+                ->where('a.tipo', 3)
+                //->where('b.titulo',$profesion)
+                ->where('a.permiso', 'LIKE','%'.$acceso.'%')
+                ->distinct()
+                ->paginate(10);
+        }
+        
         $pros = User::where('tipo', 3)->paginate(10);
 
-        return view('admin.operativos')->with('pros', $pros);
+        return view('admin.operativos')->with('pros', $pros1);
     }
 
     // GETS:
