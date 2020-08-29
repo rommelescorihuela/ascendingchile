@@ -356,11 +356,11 @@ class AdminController extends Controller
     {
         if(Auth::user()->tipo == 0)
         {
-            $user = User::find($request->idEmp);
-            $user->permiso = $request->estado;
+            $user = Levantamiento::find($request->idEmp);
+            $user->estado = $request->estado;
             $user->save();
-            if($user->permiso == $request->estado)
-                return $user->permiso;
+            if($user->estado == $request->estado)
+                return $user->estado;
             else
                 return 66;
         } else {

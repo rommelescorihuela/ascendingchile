@@ -36,12 +36,18 @@
                                 <td>{{ $pro->superior }}</td>
                                 <td>{{ $pro->supervisa }}</td>
                                 <td><a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-levantamiento-{{ $pro->id }}"><i class="fa fa-info" aria-hidden="true"></i></a></td>
-                                @php $permiso = DB::table('users')->find($pro->user_id); @endphp
-                                <td id="controles-{{ $pro->user_id }}">
-                                   @if($permiso->permiso == 1)
-                                  <p><span class="label label-success">Permitido</span></p><button onclick="aprobar({{ $pro->user_id }},1)" class="btn btn-success">Permitir</button>
+                                @php 
+                                $permiso1 = DB::table('levantamientos')->where('user_id',$pro->user_id)->get(); 
+                                foreach($permiso1 as $k)
+                                { $permiso=$k;}
+                                @endphp
+                                <td id="controles-{{ $pro->id }}">
+                                   @if($permiso->estado ==1)
+                                  <p><span class="label label-danger">Suspendido</span></p>
+                                  <button onclick="aprobar({{ $pro->id }},1)" class="btn btn-success">Permitir</button>
                                   @else
-                                  <p><span class="label label-danger">Suspendido</span></p><button onclick="aprobar({{ $pro->user_id }},0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
+                                  <p><span class="label label-success">Permitido</span></p>
+                                  <button onclick="aprobar({{ $pro->id }},0)" style="margin-top: 5px" class="btn btn-default">Supender</button>
                                   @endif
                                   <!--<button class="btn btn-danger" style="margin-top: 10px" onclick="eliminar({{ $pro }})">Eliminar</button>-->
                                   <p><a href="levantamiento-perfil/{{ $pro->id }}" class="btn btn-warning btn-sm">editar</a></p>
@@ -74,11 +80,11 @@ function aprobar(id, eo){
     success: function (response) {
         if(response == 1)
         {
-            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button><br><a href="perfil1/{{ $pro->id }}">editar</a></p>');
+            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button><br><a href="perfil1/'+id+'"  class="btn btn-warning btn-sm">editar</a></p>');
         }
         else if(response == 0)
         {
-            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button><br><a href="perfil1/{{ $pro->id }}">editar</a></p>');
+            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button><br><a href="perfil1/'+id+' " class="btn btn-warning btn-sm">editar</a></p>');
         }
         else {
             alert('No se pudo cambiar el estado de la empresa. Inténtalo más tarde.');

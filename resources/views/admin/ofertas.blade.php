@@ -110,11 +110,11 @@ function eliminar(oferta){
     success: function (response) {
         if(response == 1)
         {
-            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button><br><a href="editar-oferta/{{ $pro->id }}">editar</a></p>');
+            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button><br><a href="editar-oferta/'+id+'" class="btn btn-warning btn-sm">editar</a></p>');
         }
         else if(response == 0)
         {
-            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button><br><a href="editar-oferta/{{ $pro->id }}">editar</a></p>');
+            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button><br><a href="editar-oferta/'+id+'" class="btn btn-warning btn-sm">editar</a></p>');
         }
         else {
             alert('No se pudo cambiar el estado de la empresa. Inténtalo más tarde.');

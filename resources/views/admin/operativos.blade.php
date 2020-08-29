@@ -178,11 +178,11 @@ function aprobar(id, eo){
     success: function (response) {
         if(response == 1)
         {
-            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button>');
+            $('#controles-'+id).html('<p><span class="label label-success">Permitido</span></p><button class="btn btn-default" onclick="aprobar('+id+', 0)">Suspender</button><br><a href="perfil-op1/'+id+'" class="btn btn-warning btn-sm">editar</a>');
         }
         else if(response == 0)
         {
-            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button>');
+            $('#controles-'+id).html('<p><span class="label label-danger">Suspendido</span></p><button class="btn btn-info" onclick="aprobar('+id+', 1)">Permitir</button><br><a href="perfil-op1/'+id+'" class="btn btn-warning btn-sm">editar</a>');
         }
         else {
             alert('No se pudo cambiar el estado de la empresa. Inténtalo más tarde.');
